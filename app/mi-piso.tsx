@@ -1,15 +1,15 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  Image,
-} from 'react-native';
+import { Colors, Fonts, Radius, Spacing } from '@/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
-import { Colors, Spacing, Fonts, Radius } from '@/constants/theme';
+import React from 'react';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 const servicios = ['WiFi', 'Calefacción', 'Lavadora', 'Terraza', 'Parking'];
 
