@@ -6,6 +6,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import DrawerContent from '@/components/DrawerContent';
+import { FavoritosProvider } from '@/context/FavoritosContext';
+import { PisosProvider } from '@/context/PisosContext';
 
 export const unstable_settings = {
   anchor: 'portal',
@@ -15,28 +17,33 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Drawer
-          drawerContent={(props) => <DrawerContent {...props} />}
-          screenOptions={{
-            headerShown: false,
-            drawerStyle: {
-              width: 260,
-            },
-          }}
-        >
-          <Drawer.Screen name="portal" options={{ title: 'Portal de Anuncios' }} />
-          <Drawer.Screen name="mensajes" options={{ title: 'Mensajes' }} />
-          <Drawer.Screen name="mapa" options={{ title: 'Mapa Interactivo' }} />
-          <Drawer.Screen name="favoritos" options={{ title: 'Favoritos' }} />
-          <Drawer.Screen name="mi-piso" options={{ title: 'Mi Piso' }} />
-          <Drawer.Screen name="perfil" options={{ title: 'Perfil' }} />
-          <Drawer.Screen name="configuracion" options={{ title: 'Configuración' }} />
-          <Drawer.Screen name="anuncio/[id]" options={{ title: 'Detalle de Anuncio' }} />
-        </Drawer>
-        <StatusBar style="auto" />
-      </ThemeProvider>
-    </GestureHandlerRootView>
+    <PisosProvider>
+      <FavoritosProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+          <Drawer
+            drawerContent={(props) => <DrawerContent {...props} />}
+            screenOptions={{
+              headerShown: false,
+              drawerStyle: {
+                width: 260,
+              },
+            }}
+          >
+            <Drawer.Screen name="portal" options={{ title: 'Portal de Anuncios' }} />
+            <Drawer.Screen name="mensajes" options={{ title: 'Mensajes' }} />
+            <Drawer.Screen name="mapa" options={{ title: 'Mapa Interactivo' }} />
+            <Drawer.Screen name="favoritos" options={{ title: 'Favoritos' }} />
+            <Drawer.Screen name="mi-piso" options={{ title: 'Mi Piso' }} />
+            <Drawer.Screen name="perfil" options={{ title: 'Perfil' }} />
+            <Drawer.Screen name="configuracion" options={{ title: 'Configuración' }} />
+            <Drawer.Screen name="anuncio/[id]" options={{ title: 'Detalle de Anuncio' }} />
+            <Drawer.Screen name="chat/[pisoId]" options={{ title: 'Chat', drawerItemStyle: { display: 'none' } }} />
+          </Drawer>
+          <StatusBar style="auto" />
+        </ThemeProvider>
+      </GestureHandlerRootView>
+      </FavoritosProvider>
+    </PisosProvider>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -10,13 +10,18 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { Colors, Spacing, Fonts } from '@/constants/theme';
-import { pisos } from '@/constants/mockData';
 import ListingCard from '@/components/ListingCard';
+import { useFavoritos } from '@/context/FavoritosContext';
+import { usePisos } from '@/context/PisosContext';
 
 export default function FavoritosScreen() {
   const navigation = useNavigation();
   const router = useRouter();
-  const [favoritos, setFavoritos] = useState(pisos.filter((p) => p.favorito));
+  const { favoriteIds } = useFavoritos();
+  const { pisos } = usePisos();
+
+  // Se recalcula automáticamente cada vez que cambia favoriteIds
+  const favoritos = pisos.filter((p) => favoriteIds.has(p.id));
 
   return (
     <View style={styles.container}>

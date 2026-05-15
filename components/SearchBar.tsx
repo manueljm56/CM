@@ -14,9 +14,10 @@ interface SearchBarProps {
   onChangeText: (text: string) => void;
   onFilter?: () => void;
   onSearch?: () => void;
+  filterCount?: number;
 }
 
-export default function SearchBar({ value, onChangeText, onFilter, onSearch }: SearchBarProps) {
+export default function SearchBar({ value, onChangeText, onFilter, onSearch, filterCount = 0 }: SearchBarProps) {
   return (
     <View style={styles.container}>
       <View style={styles.inputRow}>
@@ -35,9 +36,14 @@ export default function SearchBar({ value, onChangeText, onFilter, onSearch }: S
         </TouchableOpacity>
       </View>
       <View style={styles.actions}>
-        <TouchableOpacity style={styles.filterBtn} onPress={onFilter} activeOpacity={0.7}>
-          <Ionicons name="options-outline" size={15} color={Colors.textPrimary} />
-          <Text style={styles.filterText}>Filtros</Text>
+        <TouchableOpacity style={[styles.filterBtn, filterCount > 0 && styles.filterBtnActive]} onPress={onFilter} activeOpacity={0.7}>
+          <Ionicons name="options-outline" size={15} color={filterCount > 0 ? Colors.white : Colors.textPrimary} />
+          <Text style={[styles.filterText, filterCount > 0 && styles.filterTextActive]}>Filtros</Text>
+          {filterCount > 0 && (
+            <View style={styles.badge}>
+              <Text style={styles.badgeText}>{filterCount}</Text>
+            </View>
+          )}
         </TouchableOpacity>
         <TouchableOpacity style={styles.searchBtn} onPress={onSearch} activeOpacity={0.7}>
           <Text style={styles.searchBtnText}>Buscar</Text>
@@ -117,5 +123,26 @@ const styles = StyleSheet.create({
     fontSize: Fonts.sizes.sm,
     color: Colors.white,
     fontWeight: '700',
+  },
+  filterBtnActive: {
+    backgroundColor: Colors.primary,
+    borderColor: Colors.primary,
+  },
+  filterTextActive: {
+    color: Colors.white,
+  },
+  badge: {
+    backgroundColor: Colors.accent,
+    borderRadius: 10,
+    minWidth: 18,
+    height: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+  },
+  badgeText: {
+    color: Colors.white,
+    fontSize: 10,
+    fontWeight: '800',
   },
 });

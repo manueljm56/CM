@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -10,13 +10,16 @@ import {
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors, Spacing, Fonts, Radius } from '@/constants/theme';
-import { pisos } from '@/constants/mockData';
+import { usePisos } from '@/context/PisosContext';
+import { useFavoritos } from '@/context/FavoritosContext';
 
 export default function AnuncioDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
+  const { pisos } = usePisos();
   const piso = pisos.find((p) => p.id === id);
-  const [favorito, setFavorito] = useState(piso?.favorito ?? false);
+  const { isFavorite, toggleFavorite } = useFavoritos();
+  const favorito = piso ? isFavorite(piso.id) : false;
 
   if (!piso) {
     return (
@@ -41,7 +44,7 @@ export default function AnuncioDetailScreen() {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.heartCircle}
-            onPress={() => setFavorito(!favorito)}
+            onPress={() => piso && toggleFavorite(piso.id)}
             activeOpacity={0.8}
           >
             <Ionicons
@@ -154,8 +157,12 @@ export default function AnuncioDetailScreen() {
           <Text style={styles.bottomPrice}>{piso.precio}€</Text>
           <Text style={styles.bottomLabel}>por mes</Text>
         </View>
-        <TouchableOpacity style={styles.contactBtn} activeOpacity={0.85}>
-          <Ionicons name="mail-outline" size={18} color={Colors.white} />
+        <TouchableOpacity
+          style={styles.contactBtn}
+          onPress={() => router.push(`/chat/${piso.id}` as any)}
+          activeOpacity={0.85}
+        >
+          <Ionicons name="chatbubble-outline" size={18} color={Colors.white} />
           <Text style={styles.contactBtnText}>Contactar propietario</Text>
         </TouchableOpacity>
       </View>

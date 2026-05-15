@@ -173,3 +173,41 @@ export const mensajes = [
     pisoId: '4',
   },
 ];
+
+export interface ChatMensaje {
+  id: string;
+  texto: string;
+  propio: boolean;   // true = mensaje enviado por el usuario
+  hora: string;
+}
+
+/** Historial de chat indexado por pisoId */
+export const chatMensajes: Record<string, ChatMensaje[]> = {
+  '1': [
+    { id: '1', texto: 'Hola, ¿el piso sigue disponible?', propio: false, hora: '17:10' },
+    { id: '2', texto: 'Sí, de momento está libre. ¿Cuándo te vendría bien visitarlo?', propio: true, hora: '17:15' },
+    { id: '3', texto: 'Perfecto, ¿podría ser este fin de semana?', propio: false, hora: '17:20' },
+    { id: '4', texto: 'El sábado a las 11 me viene bien.', propio: true, hora: '17:25' },
+    { id: '5', texto: 'Genial, allí estaré. ¡Muchas gracias!', propio: false, hora: '17:30' },
+  ],
+  '2': [
+    { id: '1', texto: '¿Está incluida la factura del agua?', propio: false, hora: 'Ayer 10:00' },
+    { id: '2', texto: 'Sí, agua y comunidad van incluidos en el precio.', propio: true, hora: 'Ayer 10:05' },
+    { id: '3', texto: 'Perfecto, quedamos el lunes para verlo.', propio: false, hora: 'Ayer 10:10' },
+  ],
+  '3': [
+    { id: '1', texto: 'Buenos días, me interesa el piso de Calle Alcalá.', propio: false, hora: 'Lun 09:00' },
+    { id: '2', texto: 'Hola, ¿cuántas personas seríais?', propio: true, hora: 'Lun 09:05' },
+    { id: '3', texto: 'Somos 4 estudiantes de la Complutense.', propio: false, hora: 'Lun 09:08' },
+    { id: '4', texto: 'El piso tiene 5 habitaciones, encajaría bien. ¿Queréis una visita?', propio: true, hora: 'Lun 09:10' },
+  ],
+  '4': [
+    { id: '1', texto: '¿Puedes darme más fotos del piso?', propio: false, hora: 'Mar 18:00' },
+    { id: '2', texto: 'Claro, ahora te las mando por aquí.', propio: true, hora: 'Mar 18:05' },
+  ],
+  '5': [
+    { id: '1', texto: 'Hola, ¿el piso tiene vistas a la Alhambra desde las habitaciones?', propio: false, hora: 'Hoy 11:00' },
+    { id: '2', texto: 'Solo desde el salón y el baño principal, las habitaciones dan al patio interior.', propio: true, hora: 'Hoy 11:05' },
+    { id: '3', texto: 'Entendido, igualmente me interesa mucho.', propio: false, hora: 'Hoy 11:10' },
+  ],
+};
